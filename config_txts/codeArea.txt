@@ -1,0 +1,19 @@
+ 1|void dijkstra(int start) {
+ 2|    priority_queue<Node> heap;
+ 3|    dist[start] = 0;
+ 4|    heap.push({ start, 0 });
+ 5|    while (!heap.empty()) {
+ 6|        int u = heap.top().u; heap.pop();
+ 7|        if (visited[u]) continue;
+ 8|        visited[u] = 1;
+ 9|        Node* curr = graph.adj[u];
+10|        while (curr) {
+11|            int v = curr->v, w = curr->weight;
+12|            if (dist[v] > dist[u] + w) {
+13|                dist[v] = dist[u] + w;
+14|                heap.push({ v, dist[v] });
+15|            }
+16|            curr = curr->next;
+17|        }
+18|    }
+19|}
