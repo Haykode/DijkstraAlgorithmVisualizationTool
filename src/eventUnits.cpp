@@ -120,6 +120,6 @@ void handleUserInput() {
     font.lfHeight = (int)(20 * scale);
     _tcscpy_s(font.lfFaceName, _T("Consolas"));
     settextstyle(&font);
-    settextcolor(settings.bgColor);
+    settextcolor(settings.textColor);
     drawScaledText(10, 10, _T("算法执行完毕，请点击“重置”|“清空状态”|“退出”按钮"));
 }
