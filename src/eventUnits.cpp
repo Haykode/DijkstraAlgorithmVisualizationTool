@@ -1,4 +1,10 @@
 ﻿/*
+ * Copyright (c) 2025, Xedokyah
+ * All rights reserved.
+ *
+ * This code is licensed under the BSD 3-Clause License.
+ * See the LICENSE in the project root for license terms.
+ * 
  * eventUnits.cpp
  * DijkstraDemo
  *
