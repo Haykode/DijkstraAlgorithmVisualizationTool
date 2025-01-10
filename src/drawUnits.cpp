@@ -82,7 +82,8 @@ void drawGraphArrow(int x1, int y1, int x2, int y2, COLORREF color, int thicknes
 void drawGraph(int u, int v) {
     setlinecolor(settings.bgColor);
     setfillcolor(settings.bgColor);
-    drawScaledFillRectangle(0, 50, 560, 650);
+    drawScaledFillRectangle(0, 50, 560, 600);
+    setbkmode(TRANSPARENT);
     for (int i = 0; i < graph.size; ++i) {
         Node* curr = graph.adj[i];
         while (curr) {
@@ -153,23 +154,24 @@ void drawGraph(int u, int v) {
             font.lfHeight = (int)(25 * scale);
             _tcscpy_s(font.lfFaceName, _T("Consolas"));
             settextstyle(&font);
-            settextcolor(settings.textColor);
+            settextcolor(settings.nodeIdColor);
         }
         drawScaledText(positions.pot[i].x - 13, positions.pot[i].y - 13, id);
     }
+    setbkmode(OPAQUE);
 }
 
 void drawPauseButton() {
     setlinecolor(settings.lineColor);
     setlinestyle(PS_SOLID, 2);
     setfillcolor(settings.buttonColor);
-    drawScaledFillRectangle(1050, 700, 1150, 750);
+    drawScaledFillRectangle(1050, 720, 1150, 770);
     settextcolor(settings.textColor);
     LOGFONT font = { 0 };
     font.lfHeight = (int)(24 * scale);
     _tcscpy_s(font.lfFaceName, _T("Consolas"));
     settextstyle(&font);
-    drawScaledText(1080, 715, _T("暂停"));
+    drawScaledText(1080, 735, _T("暂停"));
 }
 
 void drawButtons() {
@@ -181,19 +183,19 @@ void drawButtons() {
     font.lfHeight = (int)(24 * scale);
     _tcscpy_s(font.lfFaceName, _T("Consolas"));
     settextstyle(&font);
-    drawScaledFillRectangle(1050, 700, 1150, 750);
-    drawScaledText(1055, 715, _T("清空状态"));
-    drawScaledFillRectangle(1180, 700, 1280, 750);
-    drawScaledText(1210, 715, _T("开始"));
-    drawScaledFillRectangle(1310, 700, 1410, 750);
-    drawScaledText(1340, 715, _T("重置"));
-    drawScaledFillRectangle(1440, 700, 1540, 750);
-    drawScaledText(1470, 715, _T("退出"));
+    drawScaledFillRectangle(1050, 720, 1150, 770);
+    drawScaledText(1080, 735, _T("重置"));
+    drawScaledFillRectangle(1180, 720, 1280, 770);
+    drawScaledText(1210, 735, _T("开始"));
+    drawScaledFillRectangle(1310, 720, 1410, 770);
+    drawScaledText(1330, 735, _T("新生成"));
+    drawScaledFillRectangle(1440, 720, 1540, 770);
+    drawScaledText(1470, 735, _T("退出"));
 }
 
 void drawStatusTable() {
     int startX = 15;
-    int startY = 710;
+    int startY = 730;
     int cellWidth = 50;
     int cellHeight = 40;
     int tableWidth = positions.size * cellWidth;
@@ -269,11 +271,61 @@ void drawStatusTable() {
             settextcolor(settings.textColor);
         }
         swprintf_s(buffer, _T("%d"), i);
-        drawScaledText(startX + 3 + i * cellWidth + 10, startY + cellHeight + 10, buffer);
+        drawScaledText(startX + 3 + i * cellWidth + 10, startY + cellHeight + 5, buffer);
     }
 }
 
-void drawCode(int currLine) {
+void drawHeap(int currU, int currDist, int lable) {
+    int startX = 15;
+    int startY = 623;
+    int cellWidth = 50;
+    int cellHeight = 40;
+    int tableWidth = heap.size * cellWidth;
+    setlinecolor(settings.bgColor);
+    setfillcolor(settings.bgColor);
+    drawScaledFillRectangle(startX, startY - 20, 1600, startY + cellHeight * 2);
+    setlinecolor(settings.lineColor);
+    setlinestyle(PS_SOLID, 2);
+    drawScaledLine(startX, startY, startX + tableWidth, startY);
+    drawScaledLine(startX, startY + cellHeight * 2, startX + tableWidth, startY + cellHeight * 2);
+    drawScaledLine(startX, startY, startX, startY + cellHeight * 2);
+    for (int i = 1; i <= heap.size; ++i) {
+        drawScaledLine(startX + i * cellWidth, startY, startX + i * cellWidth, startY + cellHeight * 2);
+    }
+    setlinestyle(PS_SOLID, 0);
+    drawScaledLine(startX, startY + cellHeight, startX + tableWidth, startY + cellHeight);
+    LOGFONT font = { 0 };
+    font.lfHeight = (int)(20 * scale);
+    _tcscpy_s(font.lfFaceName, _T("Consolas"));
+    settextstyle(&font);
+    settextcolor(settings.textColor);
+    drawScaledText(startX, startY - 23, _T("heap"));
+    for (int i = 0; i < heap.size; ++i) {
+        if (heap.nodes[i].u == currU && heap.nodes[i].dist == currDist && lable == 1) {
+            font.lfHeight = (int)(24 * scale);
+            font.lfWeight = FW_BOLD;
+            settextcolor(settings.visitNodeColor);
+        }
+        else if (heap.nodes[i].u == currU && heap.nodes[i].dist == currDist && lable == 0) {
+            font.lfHeight = (int)(24 * scale);
+            font.lfWeight = FW_BOLD;
+            settextcolor(RED);
+        }
+        else {
+            font.lfHeight = (int)(20 * scale);
+            font.lfWeight = 0;
+            settextcolor(settings.textColor);
+        }
+        settextstyle(&font);
+        TCHAR buffer[50];
+        swprintf_s(buffer, _T("%3d"), heap.nodes[i].u);
+        drawScaledText(startX + i * cellWidth + 5, startY + 10, buffer);
+        swprintf_s(buffer, _T("%3d"), heap.nodes[i].dist);
+        drawScaledText(startX + i * cellWidth + 5, startY + cellHeight + 10, buffer);
+    }
+}
+
+void drawCodeArea(int currLine) {
     LOGFONT font = { 0 };
     font.lfHeight = (int)(25 * scale);
     _tcscpy_s(font.lfFaceName, _T("Consolas"));
@@ -288,18 +340,18 @@ void drawCode(int currLine) {
         }
         wchar_t wBuffer[256];
         MultiByteToWideChar(CP_ACP, 0, codeLines[i], -1, wBuffer, 256);
-        drawScaledText(1010, 50 + i * 30, wBuffer);
+        drawScaledText(1010, 30 + i * 30, wBuffer);
     }
 }
 
-void drawNodeArrow(int x, int y) {
+void drawAdjNodeArrow(int x, int y) {
     setlinecolor(settings.lineColor);
     drawScaledLine(x - 5, y + 15, x + 5, y + 15);
     drawScaledLine(x + 5, y + 15, x + 3, y + 14);
     drawScaledLine(x + 5, y + 15, x + 3, y + 16);
 }
 
-void drawNode(int u, int v, int w, int x1, int y1, int x2, int y2) {
+void drawAdjNode(int u, int v, int w, int x1, int y1, int x2, int y2) {
     setlinecolor(settings.lineColor);
     drawScaledRectangle(x1, y1, x2, y2);
     drawScaledLine(x1 + 25, y1, x1 + 25, y2);
@@ -327,7 +379,7 @@ void drawNode(int u, int v, int w, int x1, int y1, int x2, int y2) {
 }
 
 void drawAdjTable() {
-    int startX = 600, startY = 50;
+    int startX = 600, startY = 30;
     int tableWidth = 60, tableHeight = 30;
     LOGFONT font = { 0 };
     font.lfHeight = (int)(18 * scale);
@@ -362,13 +414,13 @@ void drawAdjTable() {
             continue;
         }
         int adjCowSize = 1;
-        drawNode(u, curr->v, curr->weight,
+        drawAdjNode(u, curr->v, curr->weight,
             startX, startY + u * tableHeight,
             startX + tableWidth, startY + (u + 1) * tableHeight);
         while (curr->next) {
             curr = curr->next;
-            drawNodeArrow(startX + adjCowSize * tableWidth + (adjCowSize - 1) * 5, startY + u * tableHeight);
-            drawNode(u, curr->v, curr->weight,
+            drawAdjNodeArrow(startX + adjCowSize * tableWidth + (adjCowSize - 1) * 5, startY + u * tableHeight);
+            drawAdjNode(u, curr->v, curr->weight,
                 startX + adjCowSize * (tableWidth + 5), startY + 2 + u * tableHeight,
                 startX + tableWidth + adjCowSize * (tableWidth + 5), startY + tableHeight - 2 + u * tableHeight);
             ++adjCowSize;

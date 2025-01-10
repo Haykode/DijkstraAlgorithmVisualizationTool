@@ -15,7 +15,7 @@
 
 bool paused = false;
 
-bool isReseted(short x, short y) {
+bool isGenerated(short x, short y) {
     return x >= (int)(1310 * scale) && x <= (int)(1410 * scale) && y >= (int)(700 * scale) && y <= (int)(750 * scale);
 }
 
@@ -23,7 +23,7 @@ bool isPaused(short x, short y) {
     return x >= (int)(1050 * scale) && x <= (int)(1150 * scale) && y >= (int)(700 * scale) && y <= (int)(750 * scale);
 }
 
-bool isCleared(short x, short y) {
+bool isReseted(short x, short y) {
     return x >= (int)(1050 * scale) && x <= (int)(1150 * scale) && y >= (int)(700 * scale) && y <= (int)(750 * scale);
 }
 
@@ -59,7 +59,7 @@ void pauseOrContinue(int totalDelay) {
                 font.lfHeight = (int)(24 * scale);
                 _tcscpy_s(font.lfFaceName, _T("Consolas"));
                 settextstyle(&font);
-                drawScaledText(1080, 715, _T("暂停"));
+                drawScaledText(1080, 735, _T("暂停"));
                 setfillcolor(settings.bgColor);
                 setlinecolor(settings.bgColor);
                 drawScaledFillRectangle(10, 10, 500, 50);
@@ -71,7 +71,7 @@ void pauseOrContinue(int totalDelay) {
                 font.lfHeight = (int)(24 * scale);
                 _tcscpy_s(font.lfFaceName, _T("Consolas"));
                 settextstyle(&font);
-                drawScaledText(1080, 715, _T("继续"));
+                drawScaledText(1080, 735, _T("继续"));
                 drawScaledText(10, 10, _T("已暂停，请点击“继续”|“退出”按钮"));
             }
             Sleep(settings.clickDelay);
@@ -83,7 +83,7 @@ void pauseOrContinue(int totalDelay) {
 
 int getNodeSelection(const TCHAR* prompt) {
     LOGFONT font = { 0 };
-    font.lfHeight = (int)(20 * scale);
+    font.lfHeight = (int)(24 * scale);
     _tcscpy_s(font.lfFaceName, _T("Consolas"));
     settextstyle(&font);
     settextcolor(settings.textColor);
@@ -123,9 +123,9 @@ void handleUserInput() {
     findShortestPath(startNode, endNode);
     drawButtons();
     LOGFONT font = { 0 };
-    font.lfHeight = (int)(20 * scale);
+    font.lfHeight = (int)(24 * scale);
     _tcscpy_s(font.lfFaceName, _T("Consolas"));
     settextstyle(&font);
     settextcolor(settings.textColor);
-    drawScaledText(10, 10, _T("算法执行完毕，请点击“重置”|“清空状态”|“退出”按钮"));
+    drawScaledText(10, 10, _T("算法执行完毕，请点击“重置”|“新生成”|“退出”按钮"));
 }

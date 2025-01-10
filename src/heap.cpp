@@ -23,7 +23,7 @@ void swapForHeap(int a, int b) {
 
 void initHeap(int n) {
     heap.size = 0;
-    heap.nodes = (HeapNode*)malloc(sizeof(HeapNode) * (static_cast<unsigned long long>(n) << 2));
+    heap.nodes = (HeapNode*)malloc(sizeof(HeapNode) * (static_cast<unsigned long long>(n) << 1));
     if (!heap.nodes) {
         printf("The memory is not enough!\a");
         exit(0);
@@ -51,6 +51,8 @@ void heapify(int i) {
 void push(HeapNode node) {
     int i = heap.size++;
     heap.nodes[i] = node;
+    drawHeap(node.u, node.dist, 1);
+    pauseOrContinue(settings.animationSpeed);
     while (i > 0) {
         int parent = (i - 1) >> 1;
         if (heap.nodes[parent].dist <= heap.nodes[i].dist)
@@ -58,6 +60,7 @@ void push(HeapNode node) {
         swapForHeap(parent, i);
         i = parent;
     }
+    drawHeap(node.u, node.dist, 1);
 }
 
 HeapNode top() {
@@ -71,6 +74,8 @@ HeapNode top() {
 void pop() {
     if (isHeapEmpty())
         return;
+    drawHeap(heap.nodes[0].u, heap.nodes[0].dist, 0);
+    pauseOrContinue(settings.animationSpeed);
     swapForHeap(0, --heap.size);
     heapify(0);
 }

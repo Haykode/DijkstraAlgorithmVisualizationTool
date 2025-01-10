@@ -86,6 +86,7 @@ struct Settings {
     COLORREF bgColor;
     COLORREF textColor;
     COLORREF nodeColor;
+    COLORREF nodeIdColor;
     COLORREF startNodeColor;
     COLORREF endNodeColor;
     COLORREF visitNodeColor;
@@ -116,8 +117,9 @@ void drawGraphArrow(int x1, int y1, int x2, int y2, COLORREF color, int thicknes
 void drawPauseButton();
 void drawButtons();
 void drawStatusTable();
+void drawHeap(int currU, int currDist, int lable);
 void drawGraph(int u, int v);
-void drawCode(int currLine);
+void drawCodeArea(int currLine);
 void drawAdjTable();
 void drawScaledRectangle(int x1, int y1, int x2, int y2);
 void drawScaledFillRectangle(int x1, int y1, int x2, int y2);
@@ -126,7 +128,7 @@ void drawScaledSolidCircle(int x, int y, int radius);
 void drawScaledLine(int x1, int y1, int x2, int y2);
 void pauseOrContinue(int totalDelay);
 bool isReseted(short x, short y);
-bool isCleared(short x, short y);
+bool isGenerated(short x, short y);
 bool isBeginned(short x, short y);
 bool isExited(short x, short y);
 void findShortestPath(int start, int end);

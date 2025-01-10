@@ -126,7 +126,7 @@ void generateNodePositions() {
         printf("The memory is not enough!\a");
         exit(0);
     }
-    int centerX = 300, centerY = 350;
+    int centerX = 300, centerY = 339;
     int radius = 250;
     for (int i = 0; i < positions.size; ++i) {
         double angle = 2.0 * 3.1415926 * i / positions.size;

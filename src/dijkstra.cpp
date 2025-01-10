@@ -15,81 +15,85 @@
 
 int dijkstra(int start, int end, int* predecessor) {
     initHeap(graph.size);
-    drawCode(1);
+    drawCodeArea(1);
     pauseOrContinue(settings.animationSpeed);
     positions.pot[start].dist = 0;
-    drawCode(2);
+    drawCodeArea(2);
     pauseOrContinue(settings.animationSpeed);
+    drawCodeArea(3);
     push({ start, 0 });
-    drawCode(3);
     drawStatusTable();
     pauseOrContinue(settings.animationSpeed);
+    drawHeap(-1, -1, 2);
     while (!isHeapEmpty()) {
-        drawCode(4);
+        drawCodeArea(4);
         pauseOrContinue(settings.animationSpeed);
+        drawCodeArea(5);
         int u = top().u;
         pop();
         currNode = u;
         updatingNode = -1;
-        drawCode(5);
         drawGraph(u, -1);
         drawAdjTable();
         drawStatusTable();
         pauseOrContinue(settings.animationSpeed);
+        drawHeap(-1, -1, 2);
         if (positions.pot[u].visited == 2) {
-            drawCode(6);
+            drawCodeArea(6);
             pauseOrContinue(settings.animationSpeed);
             continue;
         }
-        drawCode(6);
+        drawCodeArea(6);
         pauseOrContinue(settings.animationSpeed);
         positions.pot[u].visited = 2;
-        drawCode(7);
+        drawCodeArea(7);
         drawAdjTable();
         drawStatusTable();
         pauseOrContinue(settings.animationSpeed);
         Node* curr = graph.adj[u];
-        drawCode(8);
+        drawCodeArea(8);
         pauseOrContinue(settings.animationSpeed);
         while (curr) {
-            drawCode(9);
+            drawCodeArea(9);
             pauseOrContinue(settings.animationSpeed);
             int v = curr->v, w = curr->weight;
             updatingNode = v;
-            drawCode(10);
+            drawCodeArea(10);
             drawGraph(u, v);
             drawStatusTable();
             drawAdjTable();
             pauseOrContinue(settings.animationSpeed);
             if (positions.pot[v].dist > positions.pot[u].dist + w) {
-                drawCode(11);
+                drawCodeArea(11);
                 pauseOrContinue(settings.animationSpeed);
                 positions.pot[v].dist = positions.pot[u].dist + w;
-                drawCode(12);
+                drawCodeArea(12);
                 drawStatusTable();
                 pauseOrContinue(settings.animationSpeed);
+                drawCodeArea(13);
                 push({ v, positions.pot[v].dist });
                 predecessor[v] = u;
                 positions.pot[v].visited = 1;
-                drawCode(13);
                 drawGraph(u, v);
                 drawStatusTable();
                 drawAdjTable();
                 pauseOrContinue(settings.animationSpeed);
+                drawHeap(-1, -1, 2);
             }
-            drawCode(11);
+            drawCodeArea(11);
             pauseOrContinue(settings.animationSpeed);
             curr = curr->next;
-            drawCode(15);
+            drawCodeArea(15);
             pauseOrContinue(settings.animationSpeed);
         }
-        drawCode(9);
+        drawCodeArea(9);
         pauseOrContinue(settings.animationSpeed);
     }
-    drawCode(4);
+    drawCodeArea(4);
     pauseOrContinue(settings.animationSpeed);
     clearHeap();
-    drawCode(-1);
+    drawCodeArea(-1);
+    drawHeap(-1, -1, 2);
     currNode = -1;
     updatingNode = -1;
     drawGraph(-1, -1);
@@ -117,10 +121,12 @@ void findShortestPath(int start, int end) {
             }
             tmp = tmp->next;
         }
+        setbkmode(TRANSPARENT);
         drawGraphArrow(positions.pot[prev].x, positions.pot[prev].y,
             positions.pot[curr].x, positions.pot[curr].y,
             settings.shortestPathColor, 5, edgeWeight, true);
         Sleep(settings.shortestPathSpeed);
+        setbkmode(OPAQUE);
         curr = prev;
     }
     free(predecessor);

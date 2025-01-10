@@ -14,15 +14,19 @@
 #include "dijkstra_demo.h"
 
 void entryView() {
+    LOGFONT font = { 0 };
+    font.lfHeight = (int)(24 * scale);
+    _tcscpy_s(font.lfFaceName, _T("Consolas"));
+    settextstyle(&font);
     settextcolor(settings.textColor);
-    settextstyle((int)(20 * scale), 0, _T("Consolas"));
-    drawScaledText(10, 10, _T("请点击“开始”|“清空状态”|“重置”|“退出”按钮"));
+    drawScaledText(10, 10, _T("请点击“开始”|“新生成”|“重置”|“退出”按钮"));
     startNode = -1;
     endNode = -1;
     drawButtons();
     drawStatusTable();
+    drawHeap(-1, -1, 2);
     drawGraph(-1, -1);
-    drawCode(-1);
+    drawCodeArea(-1);
     drawAdjTable();
 }
 
@@ -42,32 +46,36 @@ int main() {
     }
     generateNodePositions();
     entryView();
+    bool running = true;
     while (true) {
         if (MouseHit()) {
             MOUSEMSG msg = GetMouseMsg();
             if (msg.uMsg == WM_LBUTTONDOWN) {
-                if (isBeginned(msg.x, msg.y)) {
+                if (isBeginned(msg.x, msg.y) && running) {
                     handleUserInput();
+                    running = false;
                 }
-                else if (isReseted(msg.x, msg.y) && !settings.dataSource) {
+                else if (isGenerated(msg.x, msg.y) && !settings.dataSource) {
                     cleardevice();
                     clearGraph();
                     generateGraph();
                     generateNodePositions();
                     entryView();
+                    running = true;
                 }
                 else if (isExited(msg.x, msg.y)) {
                     clearGraph();
                     closegraph();
                     break;
                 }
-                else if (isCleared(msg.x, msg.y)) {
+                else if (isReseted(msg.x, msg.y)) {
                     for (int i = 0; i < positions.size; ++i) {
                         positions.pot[i].dist = INT_MAX;
                         positions.pot[i].visited = 0;
                     }
                     cleardevice();
                     entryView();
+                    running = true;
                 }
             }
         }
