@@ -26,13 +26,17 @@ int dijkstra(int start, int end, int* predecessor) {
     pauseOrContinue(settings.animationSpeed);
     drawHeap(-1, -1, 2);
     while (!isHeapEmpty()) {
+        currNode = -1;
+        updatingNode = -1;
+        drawGraph(-1, -1);
+        drawAdjTable();
+        drawStatusTable();
         drawCodeArea(4);
         pauseOrContinue(settings.animationSpeed);
         drawCodeArea(5);
         int u = top().u;
         pop();
         currNode = u;
-        updatingNode = -1;
         drawGraph(u, -1);
         drawAdjTable();
         drawStatusTable();
@@ -47,8 +51,6 @@ int dijkstra(int start, int end, int* predecessor) {
         pauseOrContinue(settings.animationSpeed);
         positions.pot[u].visited = 2;
         drawCodeArea(7);
-        drawAdjTable();
-        drawStatusTable();
         pauseOrContinue(settings.animationSpeed);
         Node* curr = graph.adj[u];
         drawCodeArea(8);
@@ -60,8 +62,8 @@ int dijkstra(int start, int end, int* predecessor) {
             updatingNode = v;
             drawCodeArea(10);
             drawGraph(u, v);
-            drawStatusTable();
             drawAdjTable();
+            drawStatusTable();
             pauseOrContinue(settings.animationSpeed);
             if (positions.pot[v].dist > positions.pot[u].dist + w) {
                 drawCodeArea(11);
@@ -75,8 +77,6 @@ int dijkstra(int start, int end, int* predecessor) {
                 predecessor[v] = u;
                 positions.pot[v].visited = 1;
                 drawGraph(u, v);
-                drawStatusTable();
-                drawAdjTable();
                 pauseOrContinue(settings.animationSpeed);
                 drawHeap(-1, -1, 2);
             }
@@ -121,12 +121,10 @@ void findShortestPath(int start, int end) {
             }
             tmp = tmp->next;
         }
-        setbkmode(TRANSPARENT);
         drawGraphArrow(positions.pot[prev].x, positions.pot[prev].y,
             positions.pot[curr].x, positions.pot[curr].y,
             settings.shortestPathColor, 5, edgeWeight, true);
         Sleep(settings.shortestPathSpeed);
-        setbkmode(OPAQUE);
         curr = prev;
     }
     free(predecessor);

@@ -159,54 +159,60 @@ void readSetting() {
             sscanf_s(line, "%d", &settings.clickDelay);
             break;
         case 9:
-            settings.bgColor = parseColor(line);
+            sscanf_s(line, "%d", &settings.blinkCount);
             break;
         case 10:
-            settings.textColor = parseColor(line);
+            sscanf_s(line, "%d", &settings.blinkDuration);
             break;
         case 11:
-            settings.buttonColor = parseColor(line);
-            break;
-        case 12:
-            settings.nodeColor = parseColor(line);
-            break;
-        case 13:
-            settings.nodeIdColor = parseColor(line);
-            break;
-        case 14:
-            settings.startNodeColor = parseColor(line);
-            break;
-        case 15:
-            settings.endNodeColor = parseColor(line);
-            break;
-        case 16:
-            settings.visitNodeColor = parseColor(line);
-            break;
-        case 17:
-            settings.visitedNodeColor = parseColor(line);
-            break;
-        case 18:
-            settings.edgeColor = parseColor(line);
-            break;
-        case 19:
-            settings.visitedEdgeColor = parseColor(line);
-            break;
-        case 20:
-            settings.shortestPathColor = parseColor(line);
-            break;
-        case 21:
             sscanf_s(line, "%d", &settings.shortestPathSpeed);
             break;
+        case 12:
+            settings.bgColor = parseColor(line);
+            break;
+        case 13:
+            settings.textColor = parseColor(line);
+            break;
+        case 14:
+            settings.buttonColor = parseColor(line);
+            break;
+        case 15:
+            settings.nodeColor = parseColor(line);
+            break;
+        case 16:
+            settings.nodeIdColor = parseColor(line);
+            break;
+        case 17:
+            settings.startNodeColor = parseColor(line);
+            break;
+        case 18:
+            settings.endNodeColor = parseColor(line);
+            break;
+        case 19:
+            settings.visitNodeColor = parseColor(line);
+            break;
+        case 20:
+            settings.visitedNodeColor = parseColor(line);
+            break;
+        case 21:
+            settings.edgeColor = parseColor(line);
+            break;
         case 22:
-            settings.lineColor = parseColor(line);
+            settings.visitedEdgeColor = parseColor(line);
             break;
         case 23:
-            settings.highlightColor = parseColor(line);
+            settings.shortestPathColor = parseColor(line);
             break;
         case 24:
-            settings.tableNodeUColor = parseColor(line);
+            settings.lineColor = parseColor(line);
             break;
         case 25:
+            settings.highlightColor = parseColor(line);
+            break;
+        case 26:
+            settings.tableNodeUColor = parseColor(line);
+            break;
+        case 27:
             settings.tableNodeVColor = parseColor(line);
             break;
         default:
@@ -244,6 +250,12 @@ void readSetting() {
     }
     if (settings.shortestPathSpeed < 0) {
         settings.shortestPathSpeed = 300;
+    }
+    if (settings.blinkCount < 0) {
+        settings.blinkCount = 3;
+    }
+    if (settings.blinkDuration < 0) {
+        settings.blinkDuration = 300;
     }
 }
 

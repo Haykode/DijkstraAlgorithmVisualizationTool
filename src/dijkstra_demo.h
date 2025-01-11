@@ -82,6 +82,8 @@ struct Settings {
     int windowScale;
     int clickDelay;
     int shortestPathSpeed;
+    int blinkCount;
+    int blinkDuration;
     COLORREF buttonColor;
     COLORREF bgColor;
     COLORREF textColor;
