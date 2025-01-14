@@ -161,36 +161,26 @@ void drawGraph(int u, int v) {
     setbkmode(OPAQUE);
 }
 
-void drawPauseButton() {
-    setlinecolor(settings.lineColor);
-    setlinestyle(PS_SOLID, 2);
-    setfillcolor(settings.buttonColor);
-    drawScaledFillRectangle(1050, 720, 1150, 770);
-    settextcolor(settings.textColor);
-    LOGFONT font = { 0 };
-    font.lfHeight = (int)(24 * scale);
-    _tcscpy_s(font.lfFaceName, _T("Consolas"));
-    settextstyle(&font);
-    drawScaledText(1080, 735, _T("暂停"));
-}
-
 void drawButtons() {
+    setbkmode(TRANSPARENT);
     setlinecolor(settings.lineColor);
     setlinestyle(PS_SOLID, 2);
     setfillcolor(settings.buttonColor);
     settextcolor(settings.textColor);
     LOGFONT font = { 0 };
     font.lfHeight = (int)(24 * scale);
+    font.lfWeight = 0;
     _tcscpy_s(font.lfFaceName, _T("Consolas"));
     settextstyle(&font);
-    drawScaledFillRectangle(1050, 720, 1150, 770);
-    drawScaledText(1080, 735, _T("重置"));
-    drawScaledFillRectangle(1180, 720, 1280, 770);
-    drawScaledText(1210, 735, _T("开始"));
-    drawScaledFillRectangle(1310, 720, 1410, 770);
-    drawScaledText(1330, 735, _T("新生成"));
-    drawScaledFillRectangle(1440, 720, 1540, 770);
-    drawScaledText(1470, 735, _T("退出"));
+    drawScaledFillRectangle(1050, 720, 1150, 750);
+    drawScaledText(1080, 725, _T("重置"));
+    drawScaledFillRectangle(1180, 720, 1280, 750);
+    drawScaledText(1210, 725, _T("开始"));
+    drawScaledFillRectangle(1310, 720, 1410, 750);
+    drawScaledText(1330, 725, _T("新生成"));
+    drawScaledFillRectangle(1440, 720, 1540, 750);
+    drawScaledText(1470, 725, _T("退出"));
+    setbkmode(OPAQUE);
 }
 
 void drawStatusTable() {
@@ -380,18 +370,20 @@ void drawHeap(int currU, int currDist, int lable) {
 void drawCodeArea(int currLine) {
     LOGFONT font = { 0 };
     font.lfHeight = (int)(25 * scale);
+    font.lfWeight = 0;
     _tcscpy_s(font.lfFaceName, _T("Consolas"));
-    settextstyle(&font);
     for (int i = 0; i < codeLinesSize; ++i) {
         if (i == currLine) {
             font.lfWeight = FW_BOLD;
             settextcolor(settings.highlightColor);
         }
         else {
+            font.lfWeight = 0;
             settextcolor(settings.textColor);
         }
         wchar_t wBuffer[256];
         MultiByteToWideChar(CP_ACP, 0, codeLines[i], -1, wBuffer, 256);
+        settextstyle(&font);
         drawScaledText(1010, 30 + i * 30, wBuffer);
     }
 }

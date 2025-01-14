@@ -124,7 +124,7 @@ void findShortestPath(int start, int end) {
         drawGraphArrow(positions.pot[prev].x, positions.pot[prev].y,
             positions.pot[curr].x, positions.pot[curr].y,
             settings.shortestPathColor, 5, edgeWeight, true);
-        Sleep(settings.shortestPathSpeed);
+        pauseOrContinue(settings.shortestPathSpeed);
         curr = prev;
     }
     free(predecessor);

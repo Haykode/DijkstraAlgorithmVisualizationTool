@@ -116,7 +116,6 @@ extern int startNode;
 extern int endNode;
 void entryView();
 void drawGraphArrow(int x1, int y1, int x2, int y2, COLORREF color, int thickness, int weight, bool isHighlighted);
-void drawPauseButton();
 void drawButtons();
 void drawStatusTable();
 void drawHeap(int currU, int currDist, int lable);

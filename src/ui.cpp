@@ -16,10 +16,11 @@
 void entryView() {
     LOGFONT font = { 0 };
     font.lfHeight = (int)(24 * scale);
+    font.lfWeight = 0;
     _tcscpy_s(font.lfFaceName, _T("Consolas"));
     settextstyle(&font);
     settextcolor(settings.textColor);
-    drawScaledText(10, 10, _T("请点击“开始”|“新生成”|“重置”|“退出”按钮"));
+    drawScaledText(1050, 765, _T("请点击“开始”|“新生成”|“重置”|“退出”按钮"));
     startNode = -1;
     endNode = -1;
     drawButtons();
