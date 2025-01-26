@@ -13,7 +13,7 @@ This project is licensed under the **BSD 3-Clause License**. See the [LICENSE](L
 - **Development Environment**: Visual Studio (recommended)
 - **Graphics Library**: EasyX
 
-To build and run this project, you must install EasyX. The required header and library files are included in the repository for ease of use.  
+To build and run this project, you must install EasyX.  
 
 ## Disclaimer
 While this project is free to use and distribute under the BSD 3-Clause License, it uses the EasyX library, which is not open-source but is free for personal and educational use. Ensure that your usage of this project complies with both the BSD 3-Clause License and EasyX’s usage terms.
